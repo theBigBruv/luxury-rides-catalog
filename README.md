@@ -14,5 +14,5 @@ post, edit and delete their own items. The application also provides JSON and XM
 4. Power on the virtual machine by typing the command vagrant up
 5. Then log into the virtual machine by typing the command vagrant ssh
 6. Change directory to the synced folders by typing the command cd /vagrant
-7. Start the web application by typing the command Python application.py
+7. Start the web application by typing the command python application.py
 8. Navigate to the link http://localhost:5000/catalog on any browser of your choice to see and explore the catalog
