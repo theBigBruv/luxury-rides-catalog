@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">-->
+
+		<!-- Custom styles -->
+		<link rel=stylesheet type=text/css href="../../../static/css/carousel.css">
+
+	</head>
+	<body>
+
+		<!-- NAVBAR
+		================================================== -->
+		<div class="navbar-wrapper">
+	      <div class="container">
+
+	        <nav class="navbar navbar-inverse navbar-static-top">
+	          <div class="container">
+	            <div class="navbar-header">
+	              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="{{url_for('showCatalogs')}}">Luxury Rides Selection</a>
+	            </div>
+	            <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="{{url_for('showCatalogs')}}">Home</a></li>
+	                
+	                {% if 'username' in login_session %}
+	                	<li class="dropdown">
+	                		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	                			<img src="{{login_session['picture']}}" style="width:19px;height:19px">
+	                			<span>  {{login_session['username']}}</span>
+	                			<span class="caret"></span>
+	                		</a>
+	                		<ul class="dropdown-menu">
+	                			<li><a href="#"> {{login_session['email']}} </a></li>
+	                			<li role="sepataror" class="divider"></li>
+	                			<li><a href="{{url_for('gdisconnect')}}">Sign Out</a></li>
+	                		</ul>
+	                	</li>
+	                {% else %}
+	                	<li><a href="{{url_for('showLogin')}}">Google+ Sign In</a></li>
+	                {% endif %}
+	                
+	              </ul>
+	            </div>
+	          </div>
+	        </nav>
+
+	      </div>
+	    </div>
+		
+		<div class="container marketing" style="margin-top: 80px;">
+			
+			<div class="row featurette">
+				<div class="col-sm-12 col-md-6">
+					<h1>{{auto_maker.name}} Models</h1>
+				</div>
+				<div class="col-sm-12 col-md-6 text-right">
+					<p><a class="btn btn-default" style="margin-top: 20px" href='{{url_for('showCatalogModels', auto_maker_id = auto_maker.id)}}' role="button">Show All Models &raquo;</a></p>
+				</div>
+			</div>
+
+			{% if model != null %}	
+				<hr class="featurette-divider">
+				<div class="row featurette">
+					<div class="col-md-4">
+						<img class="featurette-image img-responsive img-thumbnail center-block" src="../{{model.thumbnail_picture}}">
+					</div>
+					<div class="col-md-8">
+						<h2 class="featurette-heading">{{model.name}}</h2>
+						<p class="lead">{{model.description}}</p>
+						<p>
+							<a href='{{url_for('editCatalogModel', auto_maker_id = auto_maker.id, auto_model_id = model.id)}}'>Edit</a> | 
+							<a href='{{url_for('deleteCatalogModel', auto_maker_id = auto_maker.id, auto_model_id = model.id)}}'>Delete</a>
+						</p>
+						<p>
+							<i>Author: {{author.name}}</i>
+							{% if author.name == 'Site Admin' %}
+								<span><img src="../{{author.picture}}" style="width:50px;height:50px"></span>
+							{% else %}
+								<span><img src="{{author.picture}}" style="width:50px;height:50px"></span>
+							{% endif %}
+						</p>
+					</div>
+				</div>
+			{% endif %}
+
+			{% if model_images !=[] %}
+				{% for model_image in model_images %}
+					<hr class="featurette-divider">
+					<div class="row featurette">
+						<div class="col-md-12">
+							<img class="featurette-image img-responsive center-block" src="../{{model_image.image_url}}">
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+
+		</div>
+
+		<!-- FOOTER
+		================================ -->
+		<div class="container">
+		  <hr class="featurette-divider">
+	      <footer>
+	      	<p class="pull-right"><a href="#">Back to top</a></p>
+	        <p>&copy; 2015 Luxury Rides, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+	      </footer>
+		</div>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins)
+		================================================================= -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	</body>
+</html>
